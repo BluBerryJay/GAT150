@@ -1,0 +1,2 @@
+INFO: Main.cpp(55)
+Hello world!

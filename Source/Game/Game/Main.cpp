@@ -46,7 +46,13 @@ public:
 
 int main(int argc, char* argv[])
 {
-	INFO_LOG;
+	// like an expection but less code
+	//int* j = nullptr;
+	//ASSERT_LOG(j, "pointer is null")
+
+
+
+	INFO_LOG("Hello world!")
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));

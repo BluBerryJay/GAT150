@@ -40,7 +40,7 @@ namespace kiko
 	{
 		if (!fileExists(path))
 		{
-			WARNING_LOG
+			WARNING_LOG("File NOT Loaded: " << path.string())
 
 			return false;
 		}

@@ -114,6 +114,16 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
 /*
 		if (kiko::g_inputSystem.GetMouseButtonDown(0) &&
 			!kiko::g_inputSystem.GetPreviousMouseButtonDown(0))

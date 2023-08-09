@@ -2,9 +2,12 @@
 #include "Weapon.h"
 #include "SpaceGame.h"
 #include "Framework/Scene.h"
+#include "Framework/Components/PhysicsComponent.h"
+#include "Framework/Components/SpriteComponent.h"
+#include "Framework/Resource/ResourceManager.h"
 #include "Input/InputSystem.h"
 #include "Renderer/Renderer.h"
-
+#include "Renderer/Texture.h"
 void Player::Update(float dt)
 {
 	Actor::Update(dt);
@@ -19,9 +22,10 @@ void Player::Update(float dt)
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 
 	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
-	AddForce(forward * m_speed * thrust);
+	
 
-
+	auto physicsComponent = GetComponent<kiko::PhysicsComponent>();
+	physicsComponent->ApplyForce(forward * m_speed * thrust);
 	//m_transform.position += forward * m_speed * thrust * kiko::g_time.GetDeltaTime();
 	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
 	m_transform.position.y = kiko::Wrap(m_transform.position.y, (float)kiko::g_renderer.GetHeight());
@@ -32,13 +36,22 @@ void Player::Update(float dt)
 	{
 		// create weapon
 		kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10.0f), 1 };
-		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>( 400.0f, transform1, m_model );
+		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>( 400.0f, transform1);
+
 		weapon->m_tag = "Player";
+		auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+		renderComponent->m_texture = kiko::g_res.Get<kiko::Texture>("ship.png", kiko::g_renderer);
+		weapon->AddComponent(std::move(renderComponent));
+		std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
 		m_scene->Add(std::move(weapon));
 
+
 		kiko::Transform transform2{ m_transform.position, m_transform.rotation - kiko::DegreesToRadians(10.0f), 1 };
-		weapon = std::make_unique<Weapon>(400.0f, transform2, m_model);
+		weapon = std::make_unique<Weapon>(400.0f, transform2);
 		weapon->m_tag = "Player";
+		auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+		renderComponent->m_texture = kiko::g_res.Get<kiko::Texture>("ship.png", kiko::g_renderer);
+		weapon->AddComponent(std::move(renderComponent));
 		m_scene->Add(std::move(weapon));
 	}
 

@@ -1,10 +1,12 @@
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ModelManager.h"
+#include "Renderer/Texture.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
 #include "Framework/Emitter.h"
+#include "Framework/Resource/ResourceManager.h"
 #include "Renderer/Text.h"
 #include "Renderer/ParticleSystem.h"
 #include "Player.h"
@@ -12,8 +14,11 @@
 #include "SpaceGame.h"
 
 #include <iostream>
+
 #include <vector>
 #include <thread>
+#include <array>
+#include <map>
 
 using namespace std;
 
@@ -41,26 +46,27 @@ public:
 	kiko::vec2 m_pos;
 	kiko::vec2 m_vel;
 };
+void SimonSaysNum(std::string text, ...)
+{
+	va_list args;
 
-
-
+	va_start(args, text);
+	int fontSize = va_arg(args, int);
+	va_end(args);
+	std::cout << text << ": " << fontSize << endl;
+	
+}
 int main(int argc, char* argv[])
 {
-	// like an expection but less code
-	//int* j = nullptr;
-	//ASSERT_LOG(j, "pointer is null")
-
-
-
-	INFO_LOG("Hello world!")
-
+	INFO_LOG("hello world")
+	SimonSaysNum("My name jeff", 21);
+	std::cout << "hello" << endl;
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
 	kiko::setFilePath("assets");
-
+	
 	// initialize engine
-	kiko::g_renderer.Initialize();
-	kiko::g_renderer.CreateWindow("CSC196", 800, 600);
+	kiko::g_renderer.Initialize();	kiko::g_renderer.CreateWindow("GAT150", 800, 600);
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
@@ -106,7 +112,7 @@ int main(int argc, char* argv[])
 
 		game->Draw(kiko::g_renderer);
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
-		
+
 		kiko::g_renderer.EndFrame();
 	}
 
@@ -114,37 +120,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-/*
-		if (kiko::g_inputSystem.GetMouseButtonDown(0) &&
-			!kiko::g_inputSystem.GetPreviousMouseButtonDown(0))
-		{
-			kiko::EmitterData data;
-			data.burst = true;
-			data.burstCount = 100;
-			data.spawnRate = 200;
-			data.angle = 0;
-			data.angleRange = kiko::Pi;
-			data.lifetimeMin = 0.5f;
-			data.lifetimeMin = 1.5f;
-			data.speedMin = 50;
-			data.speedMax = 250;
-			data.damping = 0.5f;
-
-			data.color = kiko::Color{ 1, 1, 1, 1 };
-
-			kiko::Transform transform{ { kiko::g_inputSystem.GetMousePosition() }, 0, 1};
-			auto emitter = std::make_unique<kiko::Emitter>(transform, data);
-			emitter->m_lifespan = 1.0f;
-			scene.Add(std::move(emitter));
-		}
-*/

@@ -1,26 +1,24 @@
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ModelManager.h"
-#include "Renderer/Texture.h"
+#include "Framework/Framework.h"
+
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
-#include "Framework/Scene.h"
-#include "Framework/Emitter.h"
-#include "Framework/Resource/ResourceManager.h"
-#include "Renderer/Text.h"
-#include "Renderer/ParticleSystem.h"
+
 #include "Player.h"
 #include "Enemy.h"
 #include "SpaceGame.h"
+#include "Phsyics/PhysicsSystem.h"
 
 #include <iostream>
-
 #include <vector>
 #include <thread>
 #include <array>
 #include <map>
+#include <functional>
 
 using namespace std;
+
 
 class Star
 {
@@ -56,17 +54,42 @@ void SimonSaysNum(std::string text, ...)
 	std::cout << text << ": " << fontSize << endl;
 	
 }
+
+
 int main(int argc, char* argv[])
 {
-	INFO_LOG("hello world")
+	kiko::PhysicsSystem::Instance().Initialize();
+	INFO_LOG("Initializing Engine...")
 	SimonSaysNum("My name jeff", 21);
-	std::cout << "hello" << endl;
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
 	kiko::setFilePath("assets");
+
+	/*rapidjson::Document document;
+	kiko::JSON::Load("json.json", document);
+	std::string message;
+	kiko::JSON::Read(document, "string", message);
+	std::cout << message << endl;
+	bool blJson;
+	kiko::JSON::Read(document, "bool", blJson);
+	std::cout << blJson << endl;
+	float floatJson;
+	kiko::JSON::Read(document, "float", floatJson);
+	std::cout << floatJson << endl;
+	kiko::vec2 veccy;
+	kiko::JSON::Read(document, "vector2", veccy);
+	std::cout << "Vector2" << endl;
+	std::cout << veccy << endl;
+	int i1;
+	kiko::JSON::Read(document, "integer1", i1);
+	std::cout << i1 << std::endl;
+	int i2;
+	kiko::JSON::Read(document, "integer2", i2);
+	std::cout << i2 << std::endl;*/
 	
 	// initialize engine
-	kiko::g_renderer.Initialize();	kiko::g_renderer.CreateWindow("GAT150", 800, 600);
+	kiko::g_renderer.Initialize();	
+	kiko::g_renderer.CreateWindow("GAT150", 800, 600);
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
@@ -103,6 +126,7 @@ int main(int argc, char* argv[])
 		// draw game
 		kiko::g_renderer.SetColor(0, 0, 0, 0);
 		kiko::g_renderer.BeginFrame();
+		game->Draw(kiko::g_renderer);
 		for (auto& star : stars)
 		{
 			star.Update(kiko::g_renderer.GetWidth(), kiko::g_renderer.GetHeight());
@@ -110,7 +134,6 @@ int main(int argc, char* argv[])
 			star.Draw(kiko::g_renderer);
 		}
 
-		game->Draw(kiko::g_renderer);
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
 
 		kiko::g_renderer.EndFrame();

@@ -1,23 +1,38 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "SpaceGame.h"
-#include "Framework/Scene.h"
-#include "Framework/Emitter.h"
+#include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
 
-
+bool Enemy::Initialize()
+{
+	Actor::Initialize();
+	
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = transform.scale;
+			collisionComponent->SetRadius(renderComponent->GetRadius() * scale);
+		}
+		collisionComponent->SetRadius(GetComponent<kiko::RenderComponent>()->GetRadius());
+	}
+	return true;
+}
 void Enemy::Update(float dt)
 {
 	Actor::Update(dt);
 
-	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
+	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(transform.rotation);
 	Player* player = m_scene->GetActor<Player>();
 	if (player)
 	{
-		kiko::vec2 direction = player->m_transform.position - m_transform.position;
+		kiko::vec2 direction = player->transform.position - transform.position;
 		// turn towards player		
 		float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
-		m_transform.rotation += turnAngle * dt;
+		transform.rotation += turnAngle * dt;
 		// check if player is in front
 		if (std::fabs(turnAngle) < kiko::DegreesToRadians(30.0f))
 		{
@@ -26,19 +41,20 @@ void Enemy::Update(float dt)
 
 	}
 
-	m_transform.position += forward * m_speed * kiko::g_time.GetDeltaTime();
-	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
-	m_transform.position.y = kiko::Wrap(m_transform.position.y, (float)kiko::g_renderer.GetHeight());
+	transform.position += forward * m_speed * kiko::g_time.GetDeltaTime();
+	transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
+	transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
 
 }
 
 void Enemy::OnCollision(Actor* other)
 {
-	if (other->m_tag == "Player")
+	if (other->tag == "Player")
 	{
-		m_game->AddPoints(100);
-		m_destroyed = true;
+		kiko::EventManager::Instance().DispatchEvent("AddPoints", 100);
+		//m_game->AddPoints(100);
+		destroyed = true;
 
 		// create explosion
 		kiko::EmitterData data;
@@ -55,9 +71,9 @@ void Enemy::OnCollision(Actor* other)
 
 		data.color = kiko::Color{ 1, 1, 1, 1 };
 
-		kiko::Transform transform{ m_transform.position, 0, 1};
+		kiko::Transform transform{ this->transform.position, 0, 1};
 		auto emitter = std::make_unique<kiko::Emitter>(transform, data);
-		emitter->m_lifespan = 0.1f;
+		emitter->lifespan = 0.1f;
 		m_scene->Add(std::move(emitter));
 
 	}

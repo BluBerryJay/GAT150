@@ -6,7 +6,7 @@ namespace kiko
 	class PhysicsComponent : public Component
 	{
 	public:
-		virtual void Update(float dt) override;
+		virtual void Update(float dt) = 0;
 		virtual void ApplyForce(const Vector2& force) = 0;
 
 	public:

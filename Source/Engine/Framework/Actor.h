@@ -1,19 +1,25 @@
 #pragma once
+#include "Object.h"
 #include "Core/Core.h"
+#include "Renderer/Renderer.h"
 #include "Components/Component.h"
-#include "Components/RenderComponent.h"
-#include "Renderer/Model.h"
+#include "Framework/Factory.h"
 #include <memory>
 
 namespace kiko
 {
-	class Actor
+	class Actor : public Object
 	{
 	public:
+		CLASS_DECLARATION(Actor)
 		Actor() = default;
-		Actor(const kiko::Transform& transform) :
-			m_transform{ transform }
+		Actor(const Transform& transform) :
+			transform{ transform }
 		{}
+		Actor(const Actor& other);
+
+		virtual bool Initialize() override;
+		virtual void OnDestroy() override;
 
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
@@ -32,21 +38,25 @@ namespace kiko
 
 		class Game* m_game = nullptr;
 
-		Transform m_transform;
-		std::string m_tag;
-		float m_lifespan = -1.0f;
+	public:
+		Transform transform;
+		std::string tag;
+		float lifespan = -1.0f;
+		
+		bool persistent = false;
+		bool prototype = false;
 
+		bool destroyed = false;
 	protected:
-		std::vector<std::unique_ptr<Component>> m_components;
+		std::vector<std::unique_ptr<Component>> components;
 
-		bool m_destroyed = false;
 		
 
 	};
 	template<typename T>
 	inline T* Actor::GetComponent()
 	{
-		for (auto& component : m_components)
+		for (auto& component : components)
 		{
 			T* result = dynamic_cast<T*>(component.get());
 			if (result) return result;

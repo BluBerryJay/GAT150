@@ -40,7 +40,7 @@
 			"name": "ScoreTimer",
 			"persistent": true,
 			"transform": {
-				"position": [ 450, 400 ],
+				"position": [ 75, 200 ],
 				"scale": 1,
 				"rotation": 0
 			},
@@ -50,6 +50,25 @@
 					"fontName": "Fonts/Wayfarers.ttf",
 					"fontSize": 24,
 					"text": "Time: ",
+					"color": [ 1, 1, 1, 1 ]
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "LivesCounter",
+			"persistent": true,
+			"transform": {
+				"position": [ 75, 300 ],
+				"scale": 1,
+				"rotation": 0
+			},
+			"components": [
+				{
+					"type": "TextRenderComponent",
+					"fontName": "Fonts/Wayfarers.ttf",
+					"fontSize": 24,
+					"text": "Lives: ",
 					"color": [ 1, 1, 1, 1 ]
 				}
 			]
@@ -131,7 +150,7 @@
 					"type": "SpriteAnimComponent",
 					"defaultSequenceName": "playerIdle",
 					"source": [0, 0, 0, 0],
-					"origin":  [0.5, 1],
+					"origin":  [0.5, 0.5],
 					"sequences": [
 						{
 							"name": "playerRight",
@@ -145,11 +164,11 @@
 						{
 							"name": "playerIdle",
 							"fps": 12,
-							"numColumns": 1,
+							"numColumns": 8,
 							"numRows": 1,
 							"startFrame": 1,
 							"endFrame": 1,
-							"textureName": "Textures/playerIdle.png"
+							"textureName": "Textures/playerRight.png"
 						}
 					]
 				},

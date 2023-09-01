@@ -14,8 +14,8 @@ namespace kiko
 		void OnCollisionEnter(Actor* other) override;
 		void OnCollisionExit(Actor* other) override;
 
-	private:
 		float lives = 0;
+	private:
 		float speed = 0;
 		float maxSpeed = 0;
 		float jump = 0;

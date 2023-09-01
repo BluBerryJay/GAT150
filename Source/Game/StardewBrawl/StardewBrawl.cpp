@@ -34,6 +34,7 @@ bool StardewBrawl::Initialize()
 	m_scene->GetActorByName<kiko::Actor>("Title")->active = false;
 	m_scene->GetActorByName<kiko::Actor>("StartTitle")->active = false;
 	m_scene->GetActorByName<kiko::Actor>("ScoreTimer")->active = false;
+	m_scene->GetActorByName<kiko::Actor>("LivesCounter")->active = false;
 	m_scene->GetActorByName<kiko::Player>("Player")->active = false;
 	m_scene->GetActorByName<kiko::Actor>("Coin")->active = false;
 	m_scene->GetActorByName<kiko::Enemy>("Enemy")->prototype = true;
@@ -100,7 +101,7 @@ void StardewBrawl::Update(float dt)
 			
 			m_scene->GetActorByName<kiko::Actor>("Title")->active = false;
 			m_scene->GetActorByName<kiko::Actor>("StartTitle")->active = false;
-
+			
 		}
 		
 		break;
@@ -114,8 +115,8 @@ void StardewBrawl::Update(float dt)
 		break;
 
 	case StardewBrawl::eState::StartLevel:
-		
-		
+		m_scene->GetActorByName<kiko::Actor>("LivesCounter")->active = true;
+		m_scene->GetActorByName<kiko::Actor>("ScoreTimer")->active = true;
 		
 		m_state = eState::Game;
 		break;
@@ -123,8 +124,10 @@ void StardewBrawl::Update(float dt)
 		
 		m_aliveTimer += dt;
 		
-		if (!m_scene->GetActorByName<kiko::Actor>("ScoreTimer")->active) m_scene->GetActorByName<kiko::Actor>("ScoreTimer")->active = true;
+		
 		m_scene->GetActorByName<kiko::Actor>("ScoreTimer")->GetComponent<kiko::TextRenderComponent>()->SetText("Time: " + std::to_string((int)m_aliveTimer));
+		m_scene->GetActorByName<kiko::Actor>("LivesCounter")->GetComponent<kiko::TextRenderComponent>()->SetText("Lives: " + std::to_string((int)m_scene->GetActorByName<kiko::Player>("Player")->lives));
+		
 		m_spawnTimer += dt;
 		if (m_spawnTimer > 6 && !m_scene->GetActorByName<kiko::Actor>("Enemy")->active)
 		{
@@ -132,26 +135,6 @@ void StardewBrawl::Update(float dt)
 			m_scene->GetActorByName<kiko::Actor>("Enemy")->active = true;
 			m_spawnTimer = 0;
 		}
-		else if (m_spawnTimer > 6 && m_scene->GetActorByName<kiko::Enemy>("Enemy")->active)
-		{
-			
-			std::unique_ptr<kiko::Enemy> enemy = std::make_unique<kiko::Enemy>(*m_scene->GetActorByName<kiko::Enemy>("Enemy"));
-			enemy->Initialize();
-			enemy->prototype = true;
-			
-			m_scene->Add(std::move(enemy));
-			
-			/*enemy->Initialize();
-			m_scene->Add(std::move(enemy));*/
-			
-			
-
-
-			kiko::g_audioSystem.PlayOneShot("enemyStinger", false);
-			m_spawnTimer = 0;
-		}
-		
-
 		
 		break;
 

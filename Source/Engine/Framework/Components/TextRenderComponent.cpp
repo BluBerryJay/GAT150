@@ -1,24 +1,25 @@
 #include "TextRenderComponent.h"
 #include "Framework/Resource/ResourceManager.h"
+#include "Framework/Actor.h"
 #include "Renderer/Renderer.h"
 namespace kiko
 {
     CLASS_DEFINITION(TextRenderComponent);
 
-    TextRenderComponent::TextRenderComponent(const TextRenderComponent* other)
+    TextRenderComponent::TextRenderComponent(const TextRenderComponent& other)
     {
-        text = other->text;
-        fontName = other->fontName;
+        text = other.text;
+        fontName = other.fontName;
 
         m_changed = true;
-        m_text = std::make_unique<Text>(*other->m_text.get());
+        m_text = std::make_unique<Text>(*other.m_text.get());
     }
 
     bool TextRenderComponent::Initialize()
     {
         if (!fontName.empty())
         {
-            m_text = std::make_unique<Text>(GET_RESOURCE(Text, fontName, fontSize));
+            m_text = std::make_unique<kiko::Text>(GET_RESOURCE(Font, fontName, fontSize));
         }
         return true;
     }
@@ -32,9 +33,9 @@ namespace kiko
         if (m_changed)
         {
             m_changed = false;
-            m_text->Create(renderer, text, { 1, 1, 1, 1 });
+            m_text->Create(renderer, text, color);
         }
-        m_text->Draw(renderer, );
+        m_text->Draw(renderer, m_owner->transform);
     }
 
     void TextRenderComponent::SetText(const std::string& string)
@@ -51,5 +52,6 @@ namespace kiko
         READ_DATA(value, text);
         READ_DATA(value, fontName);
         READ_DATA(value, fontSize);
+        READ_DATA(value, color);
     }
 }

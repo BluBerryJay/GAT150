@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "Framework/Components/CollisionComponent.h"
+#include "Game/Player.h"
+#include "Game/Enemy.h"
 
 namespace kiko
 {
@@ -20,7 +22,7 @@ namespace kiko
 		}
 
 		// check collisions
-		for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
+		/*for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
 		{
 			for (auto iter2 = std::next(iter1, 1); iter2 != m_actors.end(); iter2++)
 			{
@@ -34,7 +36,7 @@ namespace kiko
 					(*iter2)->OnCollision(iter1->get());
 				}
 			}
-		}
+		}*/
 	}
 
 	void Scene::Draw(Renderer& renderer)
@@ -60,10 +62,18 @@ namespace kiko
 			(force || !(*iter)->persistent) ? iter = m_actors.erase(iter) : iter++;
 		}
 	}
+	void Scene::ActivateByName(const std::string& name, bool active)
+	{
+		for (auto& actor : m_actors)
+		{
+			if (actor->name == name) actor->active = active;
+		}
+	}
+
 	bool Scene::Load(const std::string& fileName)
 	{
 		rapidjson::Document document;
-		if (JSON::Load(fileName, document))
+		if (!JSON::Load(fileName, document))
 		{
 			ERROR_LOG("Could not load scene file: " << fileName);
 			return false;
@@ -80,6 +90,7 @@ namespace kiko
 				std::string type;
 				READ_DATA(actorValue, type);
 				auto actor = CREATE_CLASS_BASE(Actor, type);
+				
 				actor->Read(actorValue);
 				if (actor->prototype)
 				{

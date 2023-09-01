@@ -1,0 +1,262 @@
+{
+	"m_actors": [
+		{
+			"type": "Actor",
+			"name": "tile01",
+			"tag": "Ground",
+			"prototype": true,
+			"transform": {
+				"scale": 2
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "Textures/tiles.png",
+					"source": [
+						256,
+						224,
+						32,
+						32
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "tile02",
+			"tag": "Foliage",
+			"prototype": true,
+			"transform": {
+				"scale": 2
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "Textures/tiles.png",
+					"source": [
+						288,
+						0,
+						32,
+						32
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0,
+					"isTrigger": true
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "tile03",
+			"tag": "Ground",
+			"prototype": true,
+			"transform": {
+				"scale": 2
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "Textures/tiles.png",
+					"source": [
+						256,
+						224,
+						32,
+						32
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "tile04",
+			"tag": "Foliage",
+			"prototype": true,
+			"transform": {
+				"scale": 2
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "Textures/tiles.png",
+					"source": [
+						288,
+						0,
+						32,
+						32
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0,
+					"isTrigger": true
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "World",
+			"transform": {
+				"position": [
+					32,
+					32
+				]
+			},
+			"components": [
+				{
+					"type": "TilemapComponent",
+					"numColumns": 13,
+					"numRows": 10,
+					"size": [ 64, 64 ],
+					"tileNames": [ "", "tile01", "tile02" ],
+					"tiles": [
+						0,0,0,0,0,0,0,0,0,0,0,0,0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						2,
+						2,
+						0,
+						2,
+						2,
+						0,
+						0,
+						0,
+						2,
+						2,
+						0,
+						2,
+						2,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1,
+						1
+					]
+				}
+			]
+		}
+		
+	]
+}

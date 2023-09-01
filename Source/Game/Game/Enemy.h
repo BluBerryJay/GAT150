@@ -1,27 +1,23 @@
 #pragma once
 #include "Framework/Framework.h"
+#include "Framework/Components/PhysicsComponent.h"
 
-class Enemy : public kiko::Actor
+namespace kiko
 {
-public:
-	Enemy(float speed, float turnRate, const kiko::Transform& transform) :
-		Actor{ transform },
-		m_speed{ speed },
-		m_turnRate{ turnRate }
+	class Enemy : public Actor
 	{
-		m_fireRate = 2.0f;
-		m_fireTimer = m_fireRate;
-	}
+	public:
+		CLASS_DECLARATION(Enemy);
+		Enemy() {}
+		bool Initialize() override;
+		void Update(float dt) override;
+		void OnCollisionEnter(Actor* other) override;
+		//bool 
 
-	bool Initialize() override;
-	void Update(float dt) override;
-	void OnCollision(Actor* other) override;
-	//bool 
+	private:
+		float m_speed = 0;
+		float m_turnRate = 0;
 
-private:
-	float m_speed = 0;
-	float m_turnRate = 0;
-
-	float m_fireRate = 0;
-	float m_fireTimer = 0;
-};
+		PhysicsComponent* m_phsyicsComponent = nullptr;
+	};
+}

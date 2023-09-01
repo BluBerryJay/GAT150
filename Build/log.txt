@@ -1,9 +1,17 @@
 INFO: Factory.h(59)
-class registeredWeapon
+class registeredEnemy
+INFO: Factory.h(59)
+class registeredPlayer
 INFO: Factory.h(59)
 class registeredObject
 INFO: Factory.h(59)
+class registeredTilemapComponent
+INFO: Factory.h(59)
+class registeredTextRenderComponent
+INFO: Factory.h(59)
 class registeredSpriteComponent
+INFO: Factory.h(59)
+class registeredSpriteAnimComponent
 INFO: Factory.h(59)
 class registeredModelRenderComponent
 INFO: Factory.h(59)
@@ -11,11 +19,21 @@ class registeredEnginePhysicsComponent
 INFO: Factory.h(59)
 class registeredCircleCollisionComponent
 INFO: Factory.h(59)
+class registeredBox2DPhysicsComponent
+INFO: Factory.h(59)
+class registeredBox2DCollisionComponent
+INFO: Factory.h(59)
 class registeredActor
-INFO: Main.cpp(101)
+INFO: Main.cpp(35)
 Initializing Engine...
-ERROR: Scene.cpp(68)
-Could not load scene file: scene.json
+INFO: Factory.h(67)
+prototype class registeredtile01
+INFO: Factory.h(67)
+prototype class registeredtile02
+INFO: Factory.h(67)
+prototype class registeredtile03
+INFO: Factory.h(67)
+prototype class registeredtile04
 INFO: EventManager.cpp(16)
 Event Subscribed: AddPoints
 INFO: EventManager.cpp(16)

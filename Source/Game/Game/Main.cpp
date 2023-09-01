@@ -58,6 +58,7 @@ void SimonSaysNum(std::string text, ...)
 
 int main(int argc, char* argv[])
 {
+	
 	kiko::PhysicsSystem::Instance().Initialize();
 	INFO_LOG("Initializing Engine...")
 	SimonSaysNum("My name jeff", 21);
@@ -119,6 +120,7 @@ int main(int argc, char* argv[])
 			quit = true;
 		}
 		kiko::g_particleSystem.Update(kiko::g_time.GetDeltaTime());
+		kiko::PhysicsSystem::Instance().Update(kiko::g_time.GetDeltaTime());
 
 		// update game
 		game->Update(kiko::g_time.GetDeltaTime());

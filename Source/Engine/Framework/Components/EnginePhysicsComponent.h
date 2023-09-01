@@ -10,5 +10,8 @@ namespace kiko
 		// Inherited via PhysicsComponent
 		virtual void ApplyForce(const Vector2& force) override;
 		virtual void Update(float dt) override;
+
+		// Inherited via PhysicsComponent
+		virtual void ApplyTorque(float torque) override;
 	};
 }

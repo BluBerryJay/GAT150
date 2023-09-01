@@ -32,7 +32,7 @@ namespace kiko
 	void Text::Draw(Renderer& renderer, const Transform& transform)
 	{
 		int width, height;
-		SDL_QueryTexture(m_texture, nullptr, nullptr, (int*)width, (int*)height);
+		SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
 		mat3 mx = transform.GetMatrix();
 		vec2 position = mx.GetTranslation();
 		vec2 size = vec2{ width, height } * mx.GetScale();

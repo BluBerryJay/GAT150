@@ -5,7 +5,7 @@ namespace kiko
 	class CollisionComponent : public Component
 	{
 	public:
-		virtual bool CheckCollision(CollisionComponent* collision) = 0;
+		virtual bool CheckCollision(CollisionComponent* collision) { return true; }
 		void SetRadius(float radius) { m_radius = radius; }
 		float GetRadius() { return m_radius; }
 	protected:

@@ -10,6 +10,10 @@ namespace kiko
 		m_velocity *= std::pow(1.0f - m_damping, dt);
 	}
 
+	void EnginePhysicsComponent::ApplyTorque(float torque)
+	{
+	}
+
 	void EnginePhysicsComponent::ApplyForce(const Vector2& force)
 	{
 

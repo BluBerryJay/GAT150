@@ -41,7 +41,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Build\Assets\scene.json">
+    <None Include="..\..\..\Build\Assets\Scenes\spacescene.json">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>

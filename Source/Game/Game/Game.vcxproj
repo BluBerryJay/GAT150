@@ -171,6 +171,9 @@
     <ProjectReference Include="..\..\Engine\Input\Input.vcxproj">
       <Project>{6a3daba7-b711-4611-a110-4039e2d23196}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Phsyics\Phsyics.vcxproj">
+      <Project>{659d96e5-65d6-4ab1-a316-a94678b460b2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Renderer\Renderer.vcxproj">
       <Project>{e8f29194-f52b-4841-89a6-163b65aaf207}</Project>
     </ProjectReference>
@@ -182,7 +185,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Build\Assets\scene.json" />
+    <None Include="..\..\..\Build\Assets\Scenes\spacescene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

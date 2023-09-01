@@ -26,7 +26,11 @@ namespace kiko
 			return std::dynamic_pointer_cast<T>(m_resources[fileName]);
 		}
 		std::shared_ptr<T> resource = std::make_shared<T>();
-		resource->Create(fileName, args...);
+		if (!resource->Create(fileName, args...))
+		{
+			WARNING_LOG("Could not create resource: " << fileName);
+			return res_t<T>();
+		}
 		m_resources[fileName] = resource;
 		return resource;
 

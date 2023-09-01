@@ -19,6 +19,8 @@ namespace kiko
 		void Add(std::unique_ptr<Actor> actor);
 		void RemoveAll(bool force = false);
 
+		void ActivateByName(const std::string& name, bool active = true);
+
 		template<typename T>
 		T* GetActor();
 		template<typename T>
@@ -29,8 +31,8 @@ namespace kiko
 		
 		friend class Actor;
 
-	private:
 		std::list<res_t<Actor>> m_actors;
+	private:
 	};
 
 	template<typename T>
@@ -50,7 +52,7 @@ namespace kiko
 	{
 		for (auto& actor : m_actors)
 		{
-			if (actor->m_name == name)
+			if (actor->name == name)
 			{
 
 				T* result = dynamic_cast<T*>(actor.get());

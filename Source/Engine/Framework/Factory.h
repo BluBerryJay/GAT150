@@ -31,13 +31,13 @@ namespace kiko
 	class PrototypeCreator : public CreatorBase
 	{
 	public:
-		PrototypeCreator(std::unique_ptr<T> prototype) : m_prototype{ std::move(prototype) } {}
+		PrototypeCreator(std::unique_ptr<T> prototype) : prototype{ std::move(prototype) } {}
 		std::unique_ptr<class Object> Create() override
 		{
-			return m_prototype->Clone();
+			return prototype->Clone();
 		}
 	private:
-		std::unique_ptr<T> m_prototype;
+		std::unique_ptr<T> prototype;
 
 	};
 	class Factory : public Singleton<Factory>
@@ -56,7 +56,7 @@ namespace kiko
 	template<typename T>
 	inline void Factory::Register(const std::string& key)
 	{
-		INFO_LOG("class registered" << key)
+		INFO_LOG("class registered" << key);
 
 		m_registry[key] = std::make_unique<Creator<T>>();
 	}
@@ -64,7 +64,7 @@ namespace kiko
 	template<typename T>
 	inline void Factory::RegisterPrototype(const std::string& key, std::unique_ptr<T> prototype)
 	{
-		INFO_LOG("prototype class registered" << key)
+		INFO_LOG("prototype class registered" << key);
 
 		m_registry[key] = std::make_unique<PrototypeCreator<T>>(std::move(prototype));
 	}
